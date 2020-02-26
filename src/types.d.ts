@@ -10,6 +10,7 @@ interface CreepMemory {
 interface Memory {
   uuid: number;
   log: any;
+  Profiler: any;
 }
 
 // `global` extension samples
