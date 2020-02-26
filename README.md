@@ -2,6 +2,17 @@
 # My screeps AI
 ![](https://screeps.com/images/logotype-animated.svg)
 
+# What me added:
+Screeps-Inscribe from ([resir014](https://github.com/resir014/screeps-inscribe))
+
+## Console Commands
+  Commands are defined in Consolecommands.st
+  Test if they work by typing in
+  ```bash
+  cc.test()
+  ```
+  in the Console.
+
 # Screeps Typescript Starter
 
 Screeps Typescript Starter is a starting point for a Screeps AI written in Typescript. It provides everything you need to start writing your AI whilst leaving `main.ts` as empty as possible.
