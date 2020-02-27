@@ -1,6 +1,6 @@
 import * as Config from "settings/config";
 
-export function run(room: Room, creep: Creep): void {
+export function run(creep: Creep): void {
   let roomController = creep.room.find<StructureController>(FIND_STRUCTURES)[0];
   //console.log("RC: " + roomController.pos);
   /*

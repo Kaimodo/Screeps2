@@ -22,6 +22,9 @@
 // Memory Version
 export const MEMORY_VERSION = 1;
 
+// Debug-Mode
+export const DEBUG_MODE = true;
+
 // Room Name
 export const roomName = Game.spawns.Spawn1.room.name;
 
@@ -30,3 +33,7 @@ export const SpawnName = Game.spawns.Spawn1.name;
 
 // Minimum number of ticksToLive for a Creep before they go to renew.
 export const DEFAULT_MIN_LIFE_BEFORE_NEEDS_REFILL: number = 300;
+
+// Manager Max Creeps per Role
+export const MANAGER_MAX_HARVESTERS = 3;
+export const MANAGER_MAX_UPGRADERS = 3;
