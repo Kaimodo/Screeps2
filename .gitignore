@@ -17,6 +17,9 @@
 # Screeps Config
 screeps.json
 
+# Slack Config
+src/utils/slack/slack_config.ts
+
 # ScreepsServer data from integration tests
 /server
 

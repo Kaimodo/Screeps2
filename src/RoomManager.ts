@@ -5,6 +5,11 @@ import * as Upgrader from "creeps/upgrader";
 
 import * as Inscribe from "screeps-inscribe";
 
+import * as Slack from "utils/slack/slack";
+import * as SlackConfig from "utils/slack/slack_config";
+
+import { basicAttach } from "utils/slack/slack";
+
 // import * as Profiler from "screeps-profiler";
 
 import * as M from "settings/memory";
@@ -34,9 +39,33 @@ function _loadCreeps(room: Room) {
   creepCount = _.size(creeps);
 
   harvesters = _.filter(creeps, (Creep: Creep) => Creep.memory.role === "harvester");
+  let harvestersSize = _.size(harvesters);
   upgraders = _.filter(creeps, (Creep: Creep) => Creep.memory.role === "upgraders");
+  let upgradersSize = _.size(upgraders);
 
   console.log(`[${Inscribe.color("Creeps found: " + creepCount, "blue")}]`);
+
+  // Slack TEST
+  if (Game.time % 100 === 0 && Config.ENABLE_SLACK) {
+    let fieldHarvesters: Slack.FieldsEntity = new Slack.FieldsEntity("Harvesters", harvestersSize.toString(), true);
+    let fieldUpgraders: Slack.FieldsEntity = new Slack.FieldsEntity("Upgraders", upgradersSize.toString(), true);
+    let fieldSpawnValue = (room.energyAvailable + " / " + room.energyCapacityAvailable).toString();
+    let fieldSpawn: Slack.FieldsEntity = new Slack.FieldsEntity("Spawn Energy", fieldSpawnValue);
+    basicAttach.text =
+      "CPU: limit: " +
+      Game.cpu.limit +
+      ", tickLimit: " +
+      Game.cpu.tickLimit +
+      ", bucket: " +
+      Game.cpu.bucket +
+      ", used: " +
+      Game.cpu.getUsed();
+    basicAttach.fields = [fieldHarvesters, fieldUpgraders, fieldSpawn];
+
+    let Testload: Slack.Payload = new Slack.Payload(SlackConfig.SLACK_USERNAME, [basicAttach]);
+
+    Slack.postToSlack(Testload);
+  }
 }
 
 function _buildMissingCreeps(room: Room) {
@@ -72,8 +101,8 @@ function _buildMissingCreeps(room: Room) {
   if (_.size(harvesters) >= Config.MANAGER_MAX_HARVESTERS) {
     if (_.size(upgraders) < Config.MANAGER_MAX_UPGRADERS) {
       if (Config.DEBUG_MODE) {
-        console.log(`[${Inscribe.color("sizeHarvesters " + _.size(harvesters), "darkblue")}]`);
-        console.log(`[${Inscribe.color("sizeUpgraders " + _.size(upgraders), "darkblue")}]`);
+        // console.log(`[${Inscribe.color("sizeHarvesters " + _.size(harvesters), "darkblue")}]`);
+        // console.log(`[${Inscribe.color("sizeUpgraders " + _.size(upgraders), "darkblue")}]`);
       }
       if (_.size(upgraders) < 1 || room.energyCapacityAvailable <= 800) {
         bodyParts = [WORK, WORK, CARRY, MOVE];
@@ -108,6 +137,7 @@ function _spawnCreep(spawn: StructureSpawn, bodyParts: BodyPartConstant[], role:
     }
 
     status = spawn.createCreep(bodyParts, creepName, properties);
+    console.log(`[${Inscribe.color("Status: " + status, "red")}]`);
 
     return _.isString(status) ? OK : status;
   } else {

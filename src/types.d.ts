@@ -1,4 +1,7 @@
 // example declaration file - remove these and add your own custom typings
+// declare const require: (module: string) => any;
+
+// interface XMLHttpRequest {}
 
 // memory extension samples
 interface CreepMemory {

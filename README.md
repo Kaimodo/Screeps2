@@ -7,7 +7,7 @@ Screeps-Inscribe from ([resir014](https://github.com/resir014/screeps-inscribe))
 Screeps Typescript Profiler from ([Screepers](https://github.com/screepers/screeps-typescript-profiler))
 
 ## Console Commands
-  Commands are defined in Consolecommands.st
+  Commands are defined in Consolecommands.ts
   Test if they work by typing in
   ```bash
   cc.test()
